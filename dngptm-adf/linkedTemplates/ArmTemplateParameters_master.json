@@ -5,11 +5,20 @@
 		"factoryName": {
 			"value": "dngptm-adf"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
-		"AzureDataLakeStorage1_accountKey": {
-			"value": ""
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://dngptmstorage.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0326-172909-152oibvw"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "dngptm-server.database.windows.net"
@@ -19,9 +28,6 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "dngptm"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://dngptmstorage.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""
