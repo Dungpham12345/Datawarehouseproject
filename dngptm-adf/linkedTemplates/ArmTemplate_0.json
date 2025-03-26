@@ -335,7 +335,7 @@
 									},
 									"userProperties": [],
 									"typeProperties": {
-										"notebookPath": "/Dngptm workspace/BaseNotebook",
+										"notebookPath": "/Dngptm workspace/Datawarehouseproject/Databricks/BaseNotebook",
 										"baseParameters": {
 											"table_schema": {
 												"value": "@item().table_schema",
