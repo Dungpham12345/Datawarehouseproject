@@ -1,0 +1,9 @@
+{
+	"name": "dngptm-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d8784bcb-104c-45c1-a8d0-db8db165f691",
+		"tenantId": "c8a3e78d-2ef6-4ce4-a0ae-1f81e776ffc5"
+	}
+}
