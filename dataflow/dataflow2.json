@@ -1,0 +1,148 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "country",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "city",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "address",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "store",
+						"type": "DatasetReference"
+					},
+					"name": "store"
+				},
+				{
+					"dataset": {
+						"referenceName": "staff",
+						"type": "DatasetReference"
+					},
+					"name": "staff"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "addressinfo"
+				},
+				{
+					"name": "join3"
+				},
+				{
+					"name": "derivedColumn2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country_id as string,",
+				"          country as string,",
+				"          last_update as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          city_id as string,",
+				"          city as string,",
+				"          country_id as string,",
+				"          last_update as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          address_id as string,",
+				"          address as string,",
+				"          address2 as string,",
+				"          district as string,",
+				"          city_id as string,",
+				"          postal_code as string,",
+				"          phone as string,",
+				"          last_update as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
+				"source(output(",
+				"          store_id as string,",
+				"          manager_staff_id as string,",
+				"          address_id as string,",
+				"          last_update as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> store",
+				"source(output(",
+				"          staff_id as string,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          address_id as string,",
+				"          email as string,",
+				"          store_id as string,",
+				"          active as string,",
+				"          username as string,",
+				"          password as string,",
+				"          last_update as string,",
+				"          picture as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> staff",
+				"source1, source2 join(source1@country_id == source2@country_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, source3 join(source2@city_id == source3@city_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"derivedColumn2 select(mapColumn(",
+				"          country,",
+				"          city,",
+				"          address_id,",
+				"          address,",
+				"          address2,",
+				"          district,",
+				"          postal_code,",
+				"          phone",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> addressinfo",
+				"staff, addressinfo join(staff@address_id == addressinfo@address_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3",
+				"join2 derive(addressInfo = concat(address, district,city,country)) ~> derivedColumn2"
+			]
+		}
+	}
+}
